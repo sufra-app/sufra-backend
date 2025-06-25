@@ -22,7 +22,6 @@ router.post("/", async (req, res) => {
 
     res.status(201).send({ message: "User registered successfully" });
   } catch (err) {
-    console.error("Registration Error:", err);
     res.status(500).send({ message: "Internal server error" });
   }
 });
