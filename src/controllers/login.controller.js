@@ -1,10 +1,8 @@
-import express from "express";
 import { User } from "../models/user.js";
-import Joi from "joi";
 import bcrypt from "bcrypt";
+import Joi from "joi";
 
-const router = express.Router();
-router.post("/", async (req, res) => {
+const loginController = async (req, res) => {
   try {
     const { error } = validateLogin(req.body);
     if (error)
@@ -25,7 +23,7 @@ router.post("/", async (req, res) => {
   } catch (err) {
     res.status(500).send({ message: "Internal server error" });
   }
-});
+};
 
 const validateLogin = (data) => {
   const schema = Joi.object({
@@ -34,4 +32,4 @@ const validateLogin = (data) => {
   });
   return schema.validate(data);
 };
-export default router;
+export default loginController;
