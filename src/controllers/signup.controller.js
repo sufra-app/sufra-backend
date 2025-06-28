@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { User, validateRegister } from "../models/user.js";
-import { sendVerificationCode } from "../middlewares/Email.js";
+import { sendVerificationCode } from "../utils/Email.js";
 const signupController = async (req, res) => {
   try {
     const { error } = validateRegister(req.body);
