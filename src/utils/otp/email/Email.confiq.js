@@ -11,4 +11,3 @@ export const transporter = nodemailer.createTransport({
     pass: process.env.PASSWORD,
   },
 });
-
