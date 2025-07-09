@@ -1,7 +1,7 @@
-import { User } from "../models/user.js";
+import { User } from "../../../models/user.js";
 import bcrypt from "bcrypt";
 import createHttpError from "http-errors";
-import validateLogin from "../utils/joi/validateLogin.js";
+import validateLogin from "../../../utils/joi/validateLogin.js";
 
 const loginController = async (req, res) => {
   const { error } = validateLogin(req.body);

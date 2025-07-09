@@ -1,8 +1,8 @@
-import verifyOTP from "../utils/otp/phone/verifyOTP.js";
+import verifyOTP from "../../../utils/otp/phone/verifyOTP.js";
 import createHttpError from "http-errors";
-import { User } from "../models/user.js";
+import { User } from "../../../models/user.js";
 
-const verifyOTPLogin = async (req, res) => {
+const verifyLoginOTP = async (req, res) => {
   const { phoneNumber, code } = req.body;
   if (!phoneNumber || !code) {
     throw createHttpError.BadRequest("Phone number and code are required.");
@@ -31,4 +31,4 @@ const verifyOTPLogin = async (req, res) => {
   });
 };
 
-export default verifyOTPLogin;
+export default verifyLoginOTP;

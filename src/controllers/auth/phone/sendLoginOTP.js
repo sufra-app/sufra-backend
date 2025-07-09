@@ -1,6 +1,6 @@
-import sendOTP from "../utils/otp/phone/sendOTP.js";
+import sendOTP from "../../../utils/otp/phone/sendOTP.js";
 import createHttpError from "http-errors";
-import { User } from "../models/user.js";
+import { User } from "../../../models/user.js";
 
 const sendLoginOTP = async (req, res) => {
   const phoneNumber = req.body.phoneNumber?.trim();

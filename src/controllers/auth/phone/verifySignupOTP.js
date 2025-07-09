@@ -1,8 +1,8 @@
 import createHttpError from "http-errors";
-import verifyOTP from "../utils/otp/phone/verifyOTP.js";
-import { User } from "../models/user.js";
+import verifyOTP from "../../../utils/otp/phone/verifyOTP.js";
+import { User } from "../../../models/user.js";
 
-const verifyPhone = async (req, res) => {
+const verifySignupPhone = async (req, res) => {
   const userId = req.user._id;
   if (!userId) {
     throw createHttpError.Unauthorized("User not authenticated");
@@ -26,4 +26,4 @@ const verifyPhone = async (req, res) => {
     message: "Phone number verified successfully",
   });
 };
-export default verifyPhone;
+export default verifySignupPhone;

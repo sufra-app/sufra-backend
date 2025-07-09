@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
 import createHttpError from "http-errors";
-import { User } from "../models/user.js";
-import validateRegister from "../utils/joi/validateRegister.js";
-import { sendOTPEmail } from "../utils/otp/email/sendOTP.js";
-import generateOTP from "../utils/otp/email/generateOtp.js";
+import { User } from "../../../models/user.js";
+import validateRegister from "../../../utils/joi/validateRegister.js";
+import { sendOTPEmail } from "../../../utils/otp/email/sendOTP.js";
+import generateOTP from "../../../utils/otp/email/generateOtp.js";
 
 const signupController = async (req, res) => {
   const { error } = validateRegister(req.body);

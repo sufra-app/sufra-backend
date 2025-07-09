@@ -1,8 +1,8 @@
-import sendOTP from "../utils/otp/phone/sendOTP.js";
+import sendOTP from "../../../utils/otp/phone/sendOTP.js";
 import createHttpError from "http-errors";
-import { User } from "../models/user.js";
+import { User } from "../../../models/user.js";
 
-const sendPhoneOTP = async (req, res) => {
+const sendSignupOTP = async (req, res) => {
   console.log("req.body:", req.body);
   const phoneNumber = req.body.phoneNumber?.trim();
 
@@ -29,4 +29,4 @@ const sendPhoneOTP = async (req, res) => {
 
   res.status(200).json({ message: "OTP sent to phone successfully." });
 };
-export default sendPhoneOTP;
+export default sendSignupOTP;
