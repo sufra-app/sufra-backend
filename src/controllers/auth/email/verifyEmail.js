@@ -12,7 +12,7 @@ const verifyEmail = async (req, res) => {
   user.isVerified = true;
   user.verificationCode = undefined;
   await user.save();
-  const token = user.generateAuthToken();
+  const token = await user.generateAuthToken();
   return res.status(200).json({
     success: true,
     message: "Email verfied sucessfully",
