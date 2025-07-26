@@ -1,7 +1,7 @@
 import { User } from "../../../models/user.js";
 import bcrypt from "bcrypt";
 import createHttpError from "http-errors";
-import validateLogin from "../../../utils/joi/validateLogin.js";
+import validateLogin from "../../../utils/joi/auth/validateLogin.js";
 
 const loginController = async (req, res) => {
   const { error } = validateLogin(req.body);
@@ -18,11 +18,16 @@ const loginController = async (req, res) => {
       "Please verify your email before logging in."
     );
   }
-
-  const token = user.generateAuthToken();
+  const token = await user.generateAuthToken();
   return res.status(200).json({
     success: true,
-    message: "Email verified successfully",
+    message: "login successful",
+    user:{
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
     token,
   });
 };

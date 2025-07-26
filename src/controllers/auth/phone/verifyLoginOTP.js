@@ -26,7 +26,8 @@ const verifyLoginOTP = async (req, res) => {
     user: {
       id: user._id,
       email: user.email,
-      phoneNumber: user.phoneNumber,
+      name: user.name,
+      role: user.role,
     },
   });
 };

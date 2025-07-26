@@ -4,7 +4,6 @@ import { User } from "../../../models/user.js";
 
 const sendLoginOTP = async (req, res) => {
   const phoneNumber = req.body.phoneNumber?.trim();
-  console.log("Phone number:", phoneNumber);
   if (!phoneNumber) {
     console.log("Phone number:", phoneNumber);
     throw createHttpError.BadRequest("Phone number is required.");

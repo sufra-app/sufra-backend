@@ -3,7 +3,6 @@ import createHttpError from "http-errors";
 import { User } from "../../../models/user.js";
 
 const sendSignupOTP = async (req, res) => {
-  console.log("req.body:", req.body);
   const phoneNumber = req.body.phoneNumber?.trim();
 
   if (!phoneNumber) {
