@@ -12,7 +12,6 @@ export const updateDishByIdController = async (req, res) => {
   if (!updatedDish) {
     throw createHttpError.createHttpError.NotFound({ error: "Dish not found" });
   }
-
   res.status(200).json({
     success: true,
     message:"Dish updated successfully.",

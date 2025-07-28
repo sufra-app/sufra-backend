@@ -7,15 +7,6 @@ const createVendorProfileController = async (req, res) => {
   const { error } = validateVendor.validate(req.body);
   if (error) throw createHttpError.BadRequest(error.details[0].message);
 
-  const {
-    businessName,
-    address,
-    description,
-    cuisineType,
-    location,
-    workingDays,
-  } = req.body;
-
   const user = await User.findById(req.user._id);
   if (!user) throw createHttpError.NotFound("User not found");
 
@@ -26,12 +17,7 @@ const createVendorProfileController = async (req, res) => {
 
   const vendor = new Vendor({
     user: req.user._id,
-    businessName,
-    address,
-    description,
-    cuisineType,
-    location,
-    workingDays,
+    ...req.body,
     isProfileComplete: true,
   });
 

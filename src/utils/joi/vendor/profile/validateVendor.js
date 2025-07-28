@@ -1,7 +1,6 @@
 import Joi from "joi";
 
 const validateVendor = Joi.object({
-  user: Joi.string().required(),
   businessName: Joi.string().required(),
   address: Joi.string().required(),
   description: Joi.string().required(),
