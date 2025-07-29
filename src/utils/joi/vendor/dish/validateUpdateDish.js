@@ -1,5 +1,15 @@
 import Joi from "joi";
 
+const validCategories = [
+  "appetizer",
+  "main course",
+  "dessert",
+  "drink",
+  "salad",
+  "soup",
+  "snack",
+];
+
 const validateUpdateDish = Joi.object({
   name: Joi.string().optional(),
   description: Joi.string().optional(),
@@ -13,7 +23,6 @@ const validateUpdateDish = Joi.object({
     min: Joi.number().required(),
     max: Joi.number().required(),
   }).optional(),
-  maxOrdersPerSlot: Joi.number().optional(),
 });
 
 export default validateUpdateDish;

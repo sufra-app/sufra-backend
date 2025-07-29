@@ -44,10 +44,6 @@ const dishSchema = new mongoose.Schema(
       min: { type: Number, required: true },
       max: { type: Number, required: true },
     },
-    maxOrdersPerSlot: {
-      type: Number,
-      required: true,
-    },
     // ratings: {
     //   average: { type: Number, default: 0 },
     //   totalReviews: { type: Number, default: 0 },

@@ -8,6 +8,7 @@ import notFound from "./src/middlewares/notFound.js";
 import vendorProfileRouter from "./src/routes/provider/profile.js";
 import dishRouter from "./src/routes/provider/dish.js";
 import uploadRouter from "./src/routes/upload/upload.js";
+import pickupSlotRouter from "./src/routes/provider/pickupSlot.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/api/auth/email", emailAuthRouter);
 app.use("/api/auth/phone", phoneOTPRouter);
 app.use("/api/vendor/profile", vendorProfileRouter);
 app.use("/api/vendor/dish", dishRouter);
+app.use("/api/vendor/pickupSlot", pickupSlotRouter);
 
 // test route
 app.get("/test", authMiddleware, (req, res) => {
