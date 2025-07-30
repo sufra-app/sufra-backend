@@ -10,11 +10,6 @@ router.use(authMiddleware, checkRole("Vendor"));
 
 router.post("/create", createVendorProfileController);
 router.put("/update", updateVendorProfileController);
-router.put(
-  "/logo",
-  authMiddleware,
-  checkRole("Vendor"),
-  updateVendorLogoController
-);
+router.put("/logo", updateVendorLogoController);
 
 export default router;

@@ -9,6 +9,10 @@ const sendSignupOTP = async (req, res) => {
     throw createHttpError.BadRequest("Phone number is required.");
   }
   const userId = req.user._id;
+  if (!userId) {
+    throw createHttpError.Unauthorized("User not authenticated");
+  }
+
   const existing = await User.findOne({ phoneNumber });
   if (existing && existing._id.toString() !== userId.toString()) {
     throw createHttpError.Conflict(

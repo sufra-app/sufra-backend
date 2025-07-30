@@ -5,10 +5,11 @@ import phoneOTPRouter from "./src/routes/auth/phone.js";
 import authMiddleware from "./src/middlewares/auth.js";
 import errorHandler from "./src/middlewares/errorHandler.js";
 import notFound from "./src/middlewares/notFound.js";
-import vendorProfileRouter from "./src/routes/provider/profile.js";
-import dishRouter from "./src/routes/provider/dish.js";
+import vendorProfileRouter from "./src/routes/vendor/profile.js";
+import dishRouter from "./src/routes/vendor/dish.js";
 import uploadRouter from "./src/routes/upload/upload.js";
-import pickupSlotRouter from "./src/routes/provider/pickupSlot.js";
+import pickupSlotRouter from "./src/routes/vendor/pickupSlot.js";
+import customerProfileRouter from "./src/routes/customer/profile.js";
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use("/api/auth/phone", phoneOTPRouter);
 app.use("/api/vendor/profile", vendorProfileRouter);
 app.use("/api/vendor/dish", dishRouter);
 app.use("/api/vendor/pickupSlot", pickupSlotRouter);
-
+app.use("/api/customer/profile",customerProfileRouter)
 // test route
 app.get("/test", authMiddleware, (req, res) => {
   res.send(req.user);
