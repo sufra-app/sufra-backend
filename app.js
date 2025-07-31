@@ -10,6 +10,7 @@ import dishRouter from "./src/routes/vendor/dish.js";
 import uploadRouter from "./src/routes/upload/upload.js";
 import pickupSlotRouter from "./src/routes/vendor/pickupSlot.js";
 import customerProfileRouter from "./src/routes/customer/profile.js";
+import customerHomeRouter from "./src/routes/customer/home.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/vendor/profile", vendorProfileRouter);
 app.use("/api/vendor/dish", dishRouter);
 app.use("/api/vendor/pickupSlot", pickupSlotRouter);
 app.use("/api/customer/profile",customerProfileRouter)
+app.use("/api/customer/home",customerHomeRouter)
 // test route
 app.get("/test", authMiddleware, (req, res) => {
   res.send(req.user);

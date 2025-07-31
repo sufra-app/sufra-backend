@@ -18,7 +18,7 @@ const verifyLoginOTP = async (req, res) => {
     throw createHttpError.NotFound("User not found.");
   }
 
-  const token = user.generateAuthToken();
+  const token = await user.generateAuthToken();
 
   res.status(200).json({
     message: "Logged in successfully with phone.",

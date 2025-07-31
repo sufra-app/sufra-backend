@@ -1,22 +1,48 @@
 import Dish from "../../../models/dish.js";
 import createHttpError from "http-errors";
+import { getPagination } from "../../../utils/pagination.js";
 
 export const getAllDishesController = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-  const skip = (page - 1) * limit;
-  const totalDishes = await Dish.countDocuments();
+  const { page, limit, skip } = getPagination(req.query);
+  const { category, dishName } = req.query;
+
+  const filter = {};
+  if (dishName) {
+    filter.name = { $regex: dishName, $options: "i" };
+  }
+  if (category) {
+    const allowedCategories = [
+      "appetizer",
+      "main course",
+      "dessert",
+      "drink",
+      "salad",
+      "soup",
+      "snack",
+    ];
+
+    if (!allowedCategories.includes(category.toLowerCase())) {
+      throw createHttpError.BadRequest("Invalid category value.");
+    }
+
+    filter.category = category.toLowerCase();
+  }
+
+  const totalDishes = await Dish.countDocuments(filter);
   const totalPages = Math.ceil(totalDishes / limit);
-  const dishes = await Dish.find()
+
+  const dishes = await Dish.find(filter)
     .populate("vendor", "businessName")
     .skip(skip)
     .limit(limit);
+
   if (!dishes || dishes.length === 0) {
     throw createHttpError.NotFound("No dishes found");
   }
+
   res.status(200).json({
     success: true,
-    message: "Dishes got successfully",
+    message: "Dishes retrieved successfully",
     dishes,
     totalPages,
     page,
