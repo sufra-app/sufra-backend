@@ -10,13 +10,22 @@ const vendorSchema = new mongoose.Schema(
     logo: { type: String },
     workingDays: { type: [String], required: true },
     location: {
-      lat: { type: Number, required: true },
-      lng: { type: Number, required: true },
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
     },
+
     isProfileComplete: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
-
+vendorSchema.index({ location: "2dsphere" });
 const Vendor = mongoose.model("Vendor", vendorSchema);
 export { Vendor };

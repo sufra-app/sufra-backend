@@ -6,9 +6,18 @@ const customerSchema = new mongoose.Schema(
     address: { type: String, required: true },
     profileImage: { type: String },
     location: {
-      lat: { type: Number, required: true },
-      lng: { type: Number, required: true },
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+        required: true,
+      },
+      coordinates: {
+        type: [Number], // [longitude, latitude]
+        required: true,
+      },
     },
+
     favoriteVendors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Vendor" }],
     favoriteDishes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Dish" }],
     savedDishes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Dish" }],

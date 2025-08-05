@@ -20,9 +20,12 @@ const validateVendor = Joi.object({
     )
     .required(),
   location: Joi.object({
-    lat: Joi.number().required(),
-    lng: Joi.number().required(),
-  }).required(),
+  type: Joi.string().valid("Point").required(),
+  coordinates: Joi.array()
+    .items(Joi.number()) 
+    .length(2)
+    .required(),
+}).required(),
   isProfileComplete: Joi.boolean().optional(),
 });
 

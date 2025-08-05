@@ -5,9 +5,12 @@ const validateCustomer = Joi.object({
   address: Joi.string().min(5).required(),
   profileImage: Joi.string().uri().optional(),
   location: Joi.object({
-    lat: Joi.number().required(),
-    lng: Joi.number().required(),
-  }).required(),
+  type: Joi.string().valid("Point").required(),
+  coordinates: Joi.array()
+    .items(Joi.number()) 
+    .length(2)
+    .required(),
+}).required(),
   favoriteVendors: Joi.array().items(objectId).optional(),
   favoriteDishes: Joi.array().items(objectId).optional(),
   savedDishes: Joi.array().items(objectId).optional(),
