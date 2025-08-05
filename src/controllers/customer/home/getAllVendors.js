@@ -1,4 +1,5 @@
 import { Vendor } from "../../../models/vendor.js";
+import Dish from "../../../models/dish.js";
 import createHttpError from "http-errors";
 import { getPagination } from "../../../utils/pagination.js";
 
@@ -55,7 +56,6 @@ export const getAllVendorsController = async (req, res) => {
   });
 };
 
-// GET VENDOR BY ID
 export const getVendorByIdController = async (req, res) => {
   const { id } = req.params;
 
@@ -64,9 +64,12 @@ export const getVendorByIdController = async (req, res) => {
     throw createHttpError.NotFound("Vendor not found");
   }
 
+  const dishes = await Dish.find({ vendor: id });
+
   res.status(200).json({
     success: true,
     message: "Vendor retrieved successfully",
     vendor,
+    dishes,
   });
 };

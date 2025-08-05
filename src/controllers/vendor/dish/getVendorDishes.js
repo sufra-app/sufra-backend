@@ -5,7 +5,6 @@ import { Vendor } from "../../../models/vendor.js";
 
 export const getVendorDishesController = async (req, res) => {
   const { page, limit, skip } = getPagination(req.query);
-  console.log(page, limit, skip);
   const userId = req.user._id;
   const vendorId = await Vendor.findOne({ user: userId }).select("_id");
   const filter = { vendor: vendorId };
