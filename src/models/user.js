@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.methods.generateAuthToken = async function () {
   const token = await signToken({ _id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
+    expiresIn: "24h",
   });
 
   return token;
