@@ -8,7 +8,7 @@ const router = express.Router();
 
 const upload = multer({ dest: "/tmp/" });
 
-router.post("/image", upload.single("image"), async (req, res, next) => {
+router.post("/image", upload.single("image"), async (req, res) => {
     if (!req.file) {
       throw createHttpError.BadRequest("No file uploaded");
     }
