@@ -6,14 +6,12 @@ import fs from "fs";
 
 const router = express.Router();
 
-// Use /tmp for file storage (Render only allows /tmp)
 const upload = multer({
   dest: "/tmp/",
-  limits: { fileSize: 5 * 1024 * 1024 }, // Optional: 5MB limit
+  limits: { fileSize: 5 * 1024 * 1024 }, 
 });
 
-router.post("/image", upload.single("image"), async (req, res, next) => {
-  try {
+router.post("/image", upload.single("image"), async (req, res) => {
     console.log("Received file:", req.file);
 
     if (!req.file) {
@@ -64,10 +62,6 @@ router.post("/image", upload.single("image"), async (req, res, next) => {
     console.log("Upload successful:", result.secure_url);
     return res.status(200).json({ url: result.secure_url });
 
-  } catch (err) {
-    console.error("Route error:", err.message);
-    next(err); // Let the global error handler respond
-  }
 });
 
 export default router;
