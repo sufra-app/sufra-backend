@@ -5,31 +5,43 @@ import createHttpError from "http-errors";
 import fs from "fs";
 
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
 
-router.post("/image", upload.single("image"), async (req, res) => {
-  console.log("File:", req.file);
-  if (!req.file) {
-    throw createHttpError.BadRequest({ error: "No file uploaded" });
-  }
-  const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
-  if (!allowedTypes.includes(req.file.mimetype)) {
-    fs.unlinkSync(req.file.path);
-    throw createHttpError.BadRequest({ error: "Invalid file type" });
-  }
+const upload = multer({ dest: "/tmp/" });
 
-  const result = await cloudinary.uploader.upload(req.file.path, {
-    folder: "Sufra",
-  });
-  if (!result || !result.secure_url) {
-    fs.unlinkSync(req.file.path);
-    throw createHttpError.InternalServerError("Failed to upload image");
-  }
+router.post("/image", upload.single("image"), async (req, res, next) => {
+    if (!req.file) {
+      throw createHttpError.BadRequest("No file uploaded");
+    }
 
-  console.log("Cl oudinary Result:  ", result);
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+    if (!allowedTypes.includes(req.file.mimetype)) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (err) {
+        console.error("Failed to delete invalid file:", err.message);
+      }
+      throw createHttpError.BadRequest("Invalid file type");
+    }
 
-  fs.unlinkSync(req.file.path);
-  return res.json({ url: result.secure_url });
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "Sufra",
+    });
+
+    if (!result || !result.secure_url) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (err) {
+        console.error("Failed to delete file after failed upload:", err.message);
+      }
+      throw createHttpError.InternalServerError("Failed to upload image");
+    }
+    try {
+      fs.unlinkSync(req.file.path);
+    } catch (err) {
+      console.error("Failed to delete temp file:", err.message);
+    }
+
+    return res.status(200).json({ url: result.secure_url });
 });
 
 export default router;
