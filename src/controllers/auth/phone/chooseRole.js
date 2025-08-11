@@ -10,7 +10,7 @@ const chooseRoleController = async (req, res) => {
   const role = rawRole.trim().toLowerCase();
   if (!["customer", "vendor"].includes(role)) {
     throw createHttpError.BadRequest(
-      "Invalid role specified. Choose either 'customer' or 'provider'."
+      "Invalid role specified. Choose either 'customer' or 'vendor'."
     );
   }
 
@@ -26,12 +26,12 @@ const chooseRoleController = async (req, res) => {
   await user.save();
   res.status(200).json({
     message: `Role set to ${user.role} successfully.`,
-    user:{
+    user: {
       id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role
-    }
+      role: user.role,
+    },
   });
 };
 export default chooseRoleController;

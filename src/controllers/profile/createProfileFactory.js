@@ -24,12 +24,13 @@ const createProfileFactory = ({
       isProfileComplete: true,
     });
 
-    await profile.save();
+    const savedProfile = await profile.save();
+    const fullProfile = await ProfileModel.findById(savedProfile._id);
 
     res.status(201).json({
       success: true,
       message: `${profileName} profile created.`,
-      [profileName.toLowerCase()]: profile,
+      [profileName.toLowerCase()]: fullProfile,
     });
   };
 };
