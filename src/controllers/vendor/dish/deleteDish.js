@@ -1,6 +1,5 @@
 import createHttpError from "http-errors";
 import Dish from "../../../models/dish.js";
-import { Vendor } from "../../../models/vendor.js";
 
 const deleteDishByIdController = async (req, res) => {
   const { id } = req.params;

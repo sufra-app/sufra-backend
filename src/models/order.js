@@ -27,20 +27,32 @@ const orderSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    pickupSlot: {  
+    pickupSlot: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "PickupSlot",
       required: true,
     },
     orderStatus: {
       type: String,
-      enum: ["pending", "confirmed", "preparing", "out_for_delivery", "delivered", "cancelled"],
+      enum: [
+        "pending",
+        "confirmed",
+        "preparing",
+        "out_for_delivery",
+        "delivered",
+        "cancelled",
+      ],
       default: "pending",
     },
     paymentStatus: {
       type: String,
       enum: ["pending", "paid", "failed"],
       default: "pending",
+    },
+    paymentMethod: {
+      type: String,
+      enum: ["stripe", "cash", "paypal"],
+      required: true,
     },
     deliveryAddress: {
       type: String,

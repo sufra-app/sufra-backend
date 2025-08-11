@@ -1,6 +1,6 @@
 import Dish from "../../../models/dish.js";
 import createHttpError from "http-errors";
-import { getPagination } from "../../../utils/pagination.js";
+import { getPagination } from "../../../utils/helpers/pagination.js";
 import { Vendor } from "../../../models/vendor.js";
 
 export const getVendorDishesController = async (req, res) => {

@@ -1,7 +1,7 @@
 import { Vendor } from "../../../models/vendor.js";
 import Dish from "../../../models/dish.js";
 import createHttpError from "http-errors";
-import { getPagination } from "../../../utils/pagination.js";
+import { getPagination } from "../../../utils/helpers/pagination.js";
 
 export const getAllVendorsController = async (req, res) => {
   const { page, limit, skip } = getPagination(req.query);

@@ -12,6 +12,8 @@ import pickupSlotRouter from "./src/routes/vendor/pickupSlot.js";
 import customerProfileRouter from "./src/routes/customer/profile.js";
 import customerHomeRouter from "./src/routes/customer/home.js";
 import favoritesRouter from "./src/routes/customer/favorites.js";
+import cartRouter from "./src/routes/customer/cart.js";
+import orderRouter from "./src/routes/customer/order.js";
 const app = express();
 
 app.use("/api/upload", uploadRouter);
@@ -27,6 +29,8 @@ app.use("/api/vendor/pickupSlot", pickupSlotRouter);
 app.use("/api/customer/profile", customerProfileRouter);
 app.use("/api/customer/home", customerHomeRouter);
 app.use("/api/customer/favorites", favoritesRouter);
+app.use("/api/customer/cart", cartRouter);
+app.use("/api/custoemr/order", orderRouter);
 // test route
 app.get("/test", authMiddleware, (req, res) => {
   res.send(req.user);
