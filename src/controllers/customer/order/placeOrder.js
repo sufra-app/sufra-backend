@@ -9,8 +9,6 @@ const placeOrder = async (req, res) => {
   const newOrder = new Order({
    ...req.body,
   });
-  console.log(newOrder);
-
   await newOrder.save();
 
   res.status(201).json({
