@@ -18,10 +18,12 @@ const deleteFromCart = async (req, res) => {
     throw createHttpError.NotFound("Cart not found");
   }
 
-  const updatedItems = cart.items.filter((item) => item.dish.toString() !== id);
+  const updatedItems = cart.dishes.filter(
+    (item) => item.dish.toString() !== id
+  );
 
   console.log(updatedItems);
-  cart.items = updatedItems;
+  cart.dishes = updatedItems;
 
   if (updatedItems.length === 0) {
     cart.vendor = undefined;

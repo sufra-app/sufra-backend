@@ -1,5 +1,31 @@
 import mongoose from "mongoose";
 
+//every dish schema
+
+const orderItemSchema = new mongoose.Schema(
+  {
+    dish: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Dish",
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    // I added it for : Snapshot of the price to prevent price changes from affecting past orders
+    priceAtOrder: {
+      type: Number,
+      required: true,
+    },
+    dishName: {
+      type: String,
+    },
+  },
+  { _id: false }
+);
+
 const orderSchema = new mongoose.Schema(
   {
     customer: {
@@ -12,16 +38,7 @@ const orderSchema = new mongoose.Schema(
       ref: "Vendor",
       required: true,
     },
-    dishes: [
-      {
-        dish: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Dish",
-          required: true,
-        },
-        quantity: { type: Number, required: true, min: 1 },
-      },
-    ],
+    dishes: [orderItemSchema],
     totalPrice: {
       type: Number,
       required: true,
@@ -32,31 +49,43 @@ const orderSchema = new mongoose.Schema(
       ref: "PickupSlot",
       required: true,
     },
+    paymentMethod: {
+      type: String,
+      enum: ["stripe", "cash"],
+      required: true,
+    },
+    // 4. Payment Proof (STRIPE INTEGRATION)
+    paymentStatus: {
+      type: String,
+      enum: ["succeeded", "pending", "failed", "canceled"],
+      default: "pending",
+      required: true,
+    },
+    paymentIntentId: {
+      type: String,
+      required: true,
+    },
+    paymentMethodId: {
+      type: String,
+      required: true,
+    },
+
     orderStatus: {
       type: String,
       enum: [
-        "pending",
-        "confirmed",
-        "preparing",
-        "out_for_delivery",
-        "delivered",
-        "cancelled",
+        "Pending",
+        "Confirmed",
+        "Preparing",
+        "ReadyForPickup",
+        "Completed",
+        "Cancelled",
       ],
-      default: "pending",
+      default: "Pending",
     },
-    paymentStatus: {
-      type: String,
-      enum: ["pending", "paid", "failed"],
-      default: "pending",
-    },
-    paymentMethod: {
-      type: String,
-      enum: ["stripe", "cash", "paypal"],
-      required: true,
-    },
-    deliveryAddress: {
-      type: String,
-      required: true,
+
+    placedAt: {
+      type: Date,
+      default: Date.now,
     },
     customerNote: { type: String, maxlength: 500 },
   },

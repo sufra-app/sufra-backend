@@ -3,7 +3,13 @@ import mongoose from "mongoose";
 const customerSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    address: { type: String, required: true },
+    address: {
+      street: { type: String, required: true }, // Corresponds to Stripe's line1
+      city: { type: String, required: true },
+      state: { type: String },
+      zipCode: { type: String, required: false },// Corresponds to Stripe's postal_code
+      country: { type: String, default: "Palestine" },
+    },
     profileImage: { type: String },
     location: {
       type: {
