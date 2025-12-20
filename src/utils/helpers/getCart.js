@@ -6,7 +6,6 @@ export const getCartHelper = async (userId) => {
   if (!customer) throw createHttpError.NotFound("Customer not found");
 
   const cart = await Cart.findOne({ customer: customer._id });
-  if (!cart) throw createHttpError.NotFound("Cart not found");
 
   return cart;
 };
