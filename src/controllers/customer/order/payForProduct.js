@@ -9,7 +9,6 @@ import clearCartHelper from "../../../utils/helpers/clearCart.js";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const payForProduct = async (req, res) => {
-  console.log("hey");
   const userId = req.user.id;
   const { paymentMethodId, pickupSlotId } = req.body;
 
@@ -61,8 +60,8 @@ const payForProduct = async (req, res) => {
       );
     }
 
-    // Calculation for cents
-    totalAmountCents += dish.price * cartItem.quantity * 100;
+    // Calculation for cents (round to avoid floating point precision issues)
+    totalAmountCents += Math.round(dish.price * cartItem.quantity * 100);
 
     // Prepare items for the new Order document
     orderItems.push({
@@ -97,7 +96,7 @@ const payForProduct = async (req, res) => {
 
     // Create and Confirm PaymentIntent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: totalAmountCents,
+      amount: Math.round(totalAmountCents),
       currency: "usd",
       customer: stripeCustomer.id,
       payment_method: paymentMethodId,
@@ -116,7 +115,6 @@ const payForProduct = async (req, res) => {
 
     // Finalize Order on Successful Payment
     if (paymentIntent.status === "succeeded") {
-      console.log(customer._id);
       const orderData = {
         customer: customer._id,
         vendor: vendorId,
@@ -132,7 +130,7 @@ const payForProduct = async (req, res) => {
 
       const newOrder = await placeOrder(orderData);
 
-      // 3. Clear the Cart (The crucial final step)
+      // 3. Clear the Cart
       await clearCartHelper(userId);
 
       return res.status(201).json({
@@ -147,7 +145,6 @@ const payForProduct = async (req, res) => {
     }
   } catch (error) {
     console.error("Payment Processing Error:", error.message);
-    // Throw an explicit HTTP error for a Stripe-related failure
     throw createHttpError.InternalServerError(
       `Payment processing failed. Please check card details. Error: ${
         error.raw?.message || error.message

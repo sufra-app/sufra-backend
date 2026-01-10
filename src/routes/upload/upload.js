@@ -26,7 +26,7 @@ router.post("/image", upload.single("image"), async (req, res) => {
     throw createHttpError.InternalServerError("Failed to upload image");
   }
 
-  console.log("Cl oudinary Result:  ", result);
+  console.log("Cloudinary Result:  ", result);
 
   fs.unlinkSync(req.file.path);
   return res.json({ url: result.secure_url });

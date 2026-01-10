@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.use(authMiddleware, checkRole("Vendor"));
 router.post("/add", addDishController);
-router.put("/update/:id", updateDishController);
+router.patch("/update/:id", updateDishController);
 router.delete("/delete/:id", deleteDishByIdController);
 router.get("/all", getVendorDishesController);
 router.get("/:id", getDishByIdController);

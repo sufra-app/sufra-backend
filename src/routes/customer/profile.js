@@ -9,7 +9,7 @@ const router = express.Router();
 router.use(authMiddleware, checkRole("Customer"));
 
 router.post("/create", createCustomerProfileController);
-router.put("/update", updateCustomerProfileController);
-router.put("/profilePhoto", updateCustomerPhotoController);
+router.patch("/update", updateCustomerProfileController);
+router.patch("/profilePhoto", updateCustomerPhotoController);
 
 export default router;

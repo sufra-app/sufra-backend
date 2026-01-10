@@ -11,7 +11,7 @@ import {
 const router = express.Router();
 router.use(authMiddleware, checkRole("Vendor"));
 router.post("/create", createPickupSlotController);
-router.put("/update/:id", updatePickupSlotController);
+router.patch("/update/:id", updatePickupSlotController);
 router.delete("/delete/:id", deletPickupSlotByIdController);
 router.get("/all", getAllPickupSlotsController);
 router.get("/:id", getPickupSlotByIdController);
