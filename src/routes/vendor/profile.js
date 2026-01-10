@@ -10,8 +10,8 @@ const router = express.Router();
 router.use(authMiddleware, checkRole("Vendor"));
 
 router.post("/create", createVendorProfileController);
-router.put("/update", updateVendorProfileController);
-router.put("/logo", updateVendorLogoController);
+router.patch("/update", updateVendorProfileController);
+router.patch("/logo", updateVendorLogoController);
 router.get("/details/:id", getVendorByIdController);
 
 export default router;
